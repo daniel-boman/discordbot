@@ -1,9 +1,11 @@
-import discord
+from threading import Lock
 
+import discord
 from discord.ext import commands
 from loguru import logger
-from modules import is_bot_admin, Snowflake
-from threading import Lock
+
+from local_types import Snowflake
+from modules import is_bot_admin
 
 
 class Colors(commands.Cog):
@@ -38,8 +40,9 @@ class Colors(commands.Cog):
         self.mutex.release()
 
     @commands.command(name='reload_colors', hidden=True)
-    @commands.check_any(is_bot_admin(), commands.has_permissions(administrator=True), commands.is_owner())
+    @commands.check_any(is_bot_admin(), commands.has_permissions(manage_roles=True), commands.is_owner())
     @commands.max_concurrency(1, wait=True)
+    @commands.guild_only()
     async def reload_colors(self, ctx):
         await self.reload()
 
@@ -71,6 +74,7 @@ class Colors(commands.Cog):
 
     @commands.command(name='color', help="Choose your name color")
     @commands.cooldown(type=commands.BucketType.user, rate=1, per=3)
+    @commands.guild_only()
     async def color(self, ctx: discord.ext.commands.Context, color: str):
         self.mutex.acquire()
         g: discord.Guild = ctx.guild

@@ -1,9 +1,8 @@
 import discord
-import modules
-
 from discord.ext import commands
 from loguru import logger
-from modules import role, admin, manager, colors
+
+from modules import role, admin, manager, colors, moderation
 
 
 def new_bot(command_prefix: str, description: str) -> discord.ext.commands.bot:
@@ -15,7 +14,8 @@ def new_bot(command_prefix: str, description: str) -> discord.ext.commands.bot:
 
         bot.add_cog(role.Role(bot))
         bot.add_cog(admin.Admin(bot))
-        # bot.add_cog(manager.Manager(bot))
+        bot.add_cog(manager.Manager(bot))
         bot.add_cog(colors.Colors(bot))
+        bot.add_cog(moderation.Moderation(bot))
 
     return bot

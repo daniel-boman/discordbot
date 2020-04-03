@@ -1,13 +1,8 @@
-import requests
 import json
 
-from loguru import logger
+import requests
 from discord.ext import commands
-
-
-class Snowflake(object):
-    def __init__(self, id: int):
-        self.id = id
+from loguru import logger
 
 
 def is_bot_admin():
