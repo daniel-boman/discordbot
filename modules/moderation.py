@@ -31,7 +31,7 @@ class Moderation(commands.Cog):
 
     @commands.command(pass_context=True, name='janitor', alias=['clear', 'clean', 'purge'],
                       help="will delete EVERY message made by user(s) in the specified channel")
-    @commands.check_any(is_bot_admin(), commands.has_permissions())
+    @commands.check_any(is_bot_admin(), commands.has_permissions(manage_messages=True))
     @commands.guild_only()
     async def purge(self, ctx: discord.ext.commands.Context, channel: discord.ext.commands.TextChannelConverter,
                     *user: discord.member.Member):
